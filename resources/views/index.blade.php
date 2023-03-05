@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+
+
     <meta
       name="description"
       content="Displaying all data related to people from Li Data's Database"
@@ -268,16 +270,14 @@
             <input
               type="text"
               name="name"
-              id="searchPeople"
+              id="nameSearchInput"
               class="w-100"
               placeholder="Enter name..."
             />
-            <form action="" class="d-flex justify-content-end mt-2">
-              <button type="submit" class="btn btn-blue rounded-1 w-100">
+               <button id="nameSearchButton" type="button" class="btn btn-blue rounded-1 w-100">
                 Apply
               </button>
-            </form>
-          </div>
+           </div>
 
           <!-- INPUT JOB TITLE -->
           <div class="input-job u-border-bottom py-4 px-4">
@@ -288,15 +288,13 @@
             <input
               type="text"
               name="job"
-              id="job"
+              id="jobSearchInput"
               placeholder="Search for a job title"
             />
-            <form action="" class="d-flex justify-content-end mt-2">
-              <button type="submit" class="btn btn-blue rounded-1 w-100">
+               <button type="button" id="jobSearchButton" class="btn btn-blue rounded-1 w-100">
                 Apply
               </button>
-            </form>
-          </div>
+           </div>
 
           <!-- INPUT COMPANY NAME -->
           <div class="input-company u-border-bottom py-4 px-4">
@@ -307,15 +305,15 @@
             <input
               type="text"
               name="company"
-              id="company"
+              id="companySearchInput"
               placeholder="Enter companies..."
             />
-            <form action="" class="d-flex justify-content-end mt-2">
-              <button type="submit" class="btn btn-blue rounded-1 w-100">
+
+               <button type="button" id="companySearchButton" class="btn btn-blue rounded-1 w-100">
                 Apply
               </button>
-            </form>
-          </div>
+
+           </div>
         </section>
         <!-- END SIDEBAR -->
 
@@ -328,7 +326,7 @@
           <div class="container">
             <div class="row">
               <div class="col-md-4 ms-auto d-flex justify-content-end mt-4">
-                <button type="button" class="btn btn-download border-3">
+                <button type="button" id="download-csv" class="btn btn-download border-3">
                   <i class="bi bi-download"></i>
                   &nbsp; Download Selected Data
                 </button>
@@ -346,9 +344,12 @@
               id="peopleTable"
             >
               <thead>
-                <tr>
+
                   <th class="px-4">
-                    <a href="#" class="selectAll"> Select All </a>
+                    {{-- <a href="#" class="selectAll">Select All</a> --}}
+
+                    <p class="selectAll" style="cursor: pointer;" id="selectAll">Select All</p>
+
                   </th>
                   <th>Name</th>
                   <th>Title</th>
@@ -357,17 +358,20 @@
                   <th>Contact Location</th>
                   <th>Employees</th>
                   <th>Industry</th>
-                </tr>
+
               </thead>
+
               <tbody>
 
                 @foreach ($data as $item)
-             
+
 
                 <tr id="li_{{ $item->id }}">
+
                   <td>
-                    <input class="form-check-input" type="checkbox" value="" />
+                    <input class="form-check-input" type="checkbox" id="input_{{ $item->id }}" value="{{ $item->id }}" onclick="selectItem({{ $item->id }})" />
                   </td>
+
                   <td>
                     <a href="#" class="person-name">
                       {{ $item->person_name }}
@@ -387,7 +391,7 @@
                     {{-- <div class="message-box hide-text">
                       Verified email costs one credit.
                     </div> --}}
-{{-- 
+{{--
                     <div class="button-group hide" id="buttonGroup">
                       <a
                         class="btn btn-access btn-access--phone"
@@ -426,8 +430,8 @@
                   <td>{{ $item->organization_num_current_employees }}</td>
                   <td>{{ $item->organization_linkedin_specialties }}</td>
                 </tr>
-                
-                 
+
+
                 @endforeach
               </tbody>
             </table>
@@ -439,6 +443,7 @@
             <div class="row">
               <div class="col-md-4 ms-auto py-4 d-flex justify-content-end">
                 <button
+                id="download-csv-down"
                   type="submit"
                   class="btn btn-download border-3"
                   disabled="disabled"
@@ -473,6 +478,8 @@
     <script src="{{ asset('assets/js/navbar.js') }}"></script>
     <script src="{{ asset('assets/js/people.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
+    <script src="{{ asset('script/custom.js') }}"></script>
+
 
     <script>
       $(function () {
@@ -492,26 +499,11 @@
       });
     </script>
 
-<script>
-  function accessEmail() {
-     creditMinus(1);
-  }
-
-  function creditMinus(amount){
-    var credit = $('#credit').text();
-
-    if (parseInt(credit) == 0) {
-      alert('You have no credit left');
-      return;
-    }
-
-    credit = parseInt(credit) - amount;
-    $('#credit').text(credit);
-    // alert('Done! one credit deducted');
-  }
 
 
-</script>
+
+
+
 
 
   </body>

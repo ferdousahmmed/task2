@@ -13,6 +13,8 @@ use App\Http\Controllers\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
- 
+
 
 Route::get('/', [DashboardController::class, 'index']);
+Route::get('/download-csv', [DashboardController::class, 'downloadCsv']);
+
